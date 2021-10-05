@@ -95,6 +95,8 @@ class Sigv4Client implements BaseSigv4Client {
     method = method!.toUpperCase();
     headers ??= {};
 
+    print("signedHeaders:");
+
     if (encoding != null) {
       headers['Content-Encoding'] = encoding;
     }
@@ -104,17 +106,17 @@ class Sigv4Client implements BaseSigv4Client {
       headers['Content-Type'] = defaultContentType;
     }
 
-    /// Set the `Accept` header
-    if (headers['Accept'] == null) {
-      headers['Accept'] = defaultAcceptType;
-    }
-
     /// Set the `body`, if any
     if (body == null || method == 'GET') {
       body = '';
     }
 
     if (signPayload) {
+      /// Set the `Accept` header
+      if (headers['Accept'] == null) {
+        headers['Accept'] = defaultAcceptType;
+      }
+
       headers[_x_amz_content_sha256] = Sigv4.hashPayload(body);
     }
 
@@ -139,6 +141,11 @@ class Sigv4Client implements BaseSigv4Client {
       headers[_x_amz_content_sha256] = _chunked_payload;
     }
 
+    /// Adds the `x-amz-security-token` header if a session token is present
+    if (sessionToken != null) {
+      headers[_x_amz_security_token] = sessionToken;
+    }
+
     /// Generates the `Authorization` headers
     headers[_authorization] = _generateAuthorization(
       method: method,
@@ -149,10 +156,8 @@ class Sigv4Client implements BaseSigv4Client {
       dateTime: dateTime,
     );
 
-    /// Adds the `x-amz-security-token` header if a session token is present
-    if (sessionToken != null) {
-      headers[_x_amz_security_token] = sessionToken;
-    }
+    print("sessionToken: ${sessionToken}");
+
     headers.remove(_host);
 
     // Return only string values
