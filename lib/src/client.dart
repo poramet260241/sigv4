@@ -95,7 +95,7 @@ class Sigv4Client implements BaseSigv4Client {
     method = method!.toUpperCase();
     headers ??= {};
 
-    print("signedHeaders:");
+//     print("signedHeaders:");
 
     if (encoding != null) {
       headers['Content-Encoding'] = encoding;
@@ -156,7 +156,7 @@ class Sigv4Client implements BaseSigv4Client {
       dateTime: dateTime,
     );
 
-    print("sessionToken: ${sessionToken}");
+//     print("sessionToken: ${sessionToken}");
 
     headers.remove(_host);
 
