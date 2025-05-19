@@ -31,3 +31,6 @@
 .pub/
 build/
 sandbox/
+
+# FVM Version Cache
+.fvm/
