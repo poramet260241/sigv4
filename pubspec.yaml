@@ -11,7 +11,7 @@ dependencies:
   crypto: ^3.0.1
   http: ^1.4.0
   convert: ^3.0.0
-  dio: ^5.8.0+1
+  dio: ^4.0.6
 
 dev_dependencies:
   pedantic: ^1.11.0
